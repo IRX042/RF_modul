@@ -1,0 +1,23 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable< Listazas.Dnn.listazas.Models.Item >>
+
+@using System.Text.RegularExpressions
+@using DotNetNuke.Web.Mvc.Helpers
+
+
+<div id="Item-@Dnn.ModuleContext.ModuleId">
+    @if (Model.Count() == 0)
+    {
+        <p>@Dnn.LocalizeString("Nincs feliratkozás")</p>
+    }
+    else
+    {
+        <ul class="tm_tl">
+            @foreach (var item in Model)
+            {
+                <li class="tm_t">
+                    <h3>@item.ItemName</h3>
+                </li>
+            }
+        </ul>
+    }
+</div>

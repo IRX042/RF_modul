@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Listazas.Dnn.listazas.Models.Merged>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/DesktopModules/MVC/listazas/Views/Shared/_Layout.cshtml";
+}
+
+<h3>
+    Feliratkozók
+</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>@Html.DisplayNameFor(model => model.Email)</th>
+        <th>@Html.DisplayNameFor(model => model.FeliratkozasID)</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.UserID)*@
+            @item.UserID.ToString()
+        </td>
+        <td>
+            @item.Email.ToString()
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+        </td>
+        <td>
+            @item.FeliratkozasID.ToString()
+        </td>
+    </tr>
+}
+
+</table>
