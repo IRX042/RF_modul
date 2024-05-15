@@ -1,0 +1,60 @@
+﻿@model form0.Dnn.form0.Models.felir
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/DesktopModules/MVC/form0/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.UserID == 0)
+{
+    <h2>Feliratkozás</h2>
+    <form>
+    </form>
+    <form action="@Url.Action("CreateFelir", "Rekord")" method="post">
+
+        <label for="csomag_tipus">Csomag típusa:</label><br>
+        <select id="csomag_tipus" name="csomag_tipus" required>
+            <option value="1">Borcsomag 1</option>
+            <option value="2">Borcsomag 2</option>
+            <option value="3">Borcsomag 3</option>
+        </select><br><br>
+
+        <button type="submit">Feliratkozás</button>
+    </form>
+}
+else
+{
+    <h2>Feliratkozás kezelése</h2><br>
+    <h6>Jelenlegi csomagod:</h6>
+    if (Model.FeliratkozasID == 1)
+    {<label>Borcsomag 1</label>}
+    if (Model.FeliratkozasID == 2)
+    {<label>Borcsomag 2</label>}
+    if (Model.FeliratkozasID == 3)
+    {<label>Borcsomag 3</label>}<br><br>
+    <form>
+    </form>
+    <form action="@Url.Action("Valt", "Rekord")" method="post">
+        <label for="csomag_tipus">Csomagváltás:</label><br>
+        <select id="csomag_tipus" name="csomag_tipus" required>
+            @if (Model.FeliratkozasID != 1)
+            {
+                <option value="1">Borcsomag 1</option>
+            }
+            @if (Model.FeliratkozasID != 2)
+            {
+                <option value="2">Borcsomag 2</option>
+            }
+            @if (Model.FeliratkozasID != 3)
+            {
+                <option value="3">Borcsomag 3</option>
+            }
+        </select><br><br>
+        <button type="submit">Válts!</button>
+    </form><br>
+    <form action="@Url.Action("Leir", "Rekord")" method="post">
+        <button type="submit">Leiratkozás</button>
+    </form>
+}
+
+

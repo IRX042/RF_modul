@@ -1,0 +1,20 @@
+﻿@model form0.Dnn.form0.Models.felir
+
+@{
+    ViewBag.Title = "CreateFelir";
+    Layout = "~/DesktopModules/MVC/form0/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.UserID == -1)
+{
+    <h2>A feliratkozáshoz bejelentkezés szükséges!</h2>
+}
+else if (Model.UserID == 0)
+{
+    <h2>Hiba történt, próbálja meg később!</h2>
+}
+else
+{
+    <h2>Sikeres feliratkozás!</h2>
+}
+<a href="@Url.Action("Index", "Rekord")">Vissza</a>
