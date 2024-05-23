@@ -84,7 +84,7 @@ namespace Nokedlik.Dnn.suti.Controllers
             return RedirectToDefaultRoute();
         }
 
-        [ModuleAction(ControlKey = "Edit", TitleKey = "AddItem")]
+        //[ModuleAction(ControlKey = "Edit", TitleKey = "AddItem")]
         public ActionResult Index()
         {
             var currentUser = UserController.Instance.GetCurrentUserInfo();
@@ -92,11 +92,15 @@ namespace Nokedlik.Dnn.suti.Controllers
             string bvin = "";
             IDataContext ctx = DataContext.Instance();
             var rep = ctx.GetRepository<Order>();
-            string url = "http://20.234.113.211:8107";
+            string url = "http://20.234.113.211:8107/DesktopModules/Hotcakes/API/rest/v1/orders";
             url = "http://www.dnndev.me/";
+
             string key = "1-79771cd1-cb22-4710-a786-b360d8a92c2f";
             key = "1-f7b5b986-6a80-44a9-9141-003b8559ca85";
 
+
+            // known issue:
+            // guestek kosarát nem kezeli megfelelően, mert a süti törlése mindíg végbemegy, nem csak akkor amikor kijelentkezünk/bejelentkezünk
             if (Request.Cookies["hotcakes-cartid-1"] != null)
             {
                 // Delete the existing cookie by setting its expiration date to a past date
@@ -104,20 +108,25 @@ namespace Nokedlik.Dnn.suti.Controllers
             }
 
             Api proxy = new Api(url, key);
-
             // call the API to find all orders in the store
             ApiResponse<List<OrderSnapshotDTO>> response = proxy.OrdersFindAll();
 
-            List<OrderSnapshotDTO> orderSnapshotList = response.Content;
 
-            foreach (var orderSnapshot in orderSnapshotList)
+            List<OrderSnapshotDTO> orderSnapshotList = new List<OrderSnapshotDTO>();
+            if (response != null)
             {
-                if (orderSnapshot.UserID == a.ToString())
+                orderSnapshotList = response.Content;
+                if (orderSnapshotList != null)
                 {
-                    bvin = orderSnapshot.bvin; break;
+                    foreach (var orderSnapshot in orderSnapshotList)
+                    {
+                        if (orderSnapshot.UserID == a.ToString())
+                        {
+                            bvin = orderSnapshot.bvin; break;
+                        }
+                    }
                 }
             }
-
             if (bvin != "")
             {
                 HttpCookie cookie = new HttpCookie("hotcakes-cartid-1", bvin);
