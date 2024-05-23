@@ -132,7 +132,9 @@ namespace Listazas.Dnn.listazas.Controllers
                 ApiResponse<List<OrderSnapshotDTO>> response1 = proxy.OrdersFindAll();
 
                 List<OrderSnapshotDTO> orderSnapshotList = response1.Content;
-
+                // known issue:
+                // ha több order van egy usernél, akkor az elsőt veszi
+                // ugyanez hiba a süti modulban is megjelenik, az alábbi foreach javítása feloldhatná ezt a problémát
                 foreach (var orderSnapshot in orderSnapshotList)
                 {
                     if (orderSnapshot.UserID == a.ToString())
@@ -168,12 +170,14 @@ namespace Listazas.Dnn.listazas.Controllers
                             Quantity = 1
                         });
                         break;
+                    // ide jönne a többi 5 csomag
                     default:
                         break;
                 }
 
                 if (bvin == "")
                 {
+                    // Csak kosárba adunk, nincs leadva a rendelés
                     order.IsPlaced = false;
                     order.FraudScore = -1;
 
