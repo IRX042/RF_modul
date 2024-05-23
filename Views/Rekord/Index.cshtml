@@ -8,53 +8,149 @@
 @if (Model.UserID == 0)
 {
     <h2>Feliratkozás</h2>
-    <form>
-    </form>
-    <form action="@Url.Action("CreateFelir", "Rekord")" method="post">
 
-        <label for="csomag_tipus">Csomag típusa:</label><br>
-        <select id="csomag_tipus" name="csomag_tipus" required>
-            <option value="1">Borcsomag 1</option>
-            <option value="2">Borcsomag 2</option>
-            <option value="3">Borcsomag 3</option>
-        </select><br><br>
+    <table>
+        <tr>
+            <!-- Row -->
+            <td>
+                <form>
+                </form>
+                <form action="@Url.Action("CreateFelir", "Rekord")" method="post">
 
-        <button type="submit">Feliratkozás</button>
-    </form>
+                    <label for="csomag_tipus">Csomag típusa:</label><br>
+                    <select id="csomag_tipus" name="csomag_tipus" onchange="changeSelection()" required>
+                        <option value="1">Vörösbor különlegességek</option>
+                        <option value="2">Borcsomag 2</option>
+                        <option value="3">Borcsomag 3</option>
+                        <option value="4">Borcsomag 4</option>
+                        <option value="5">Borcsomag 5</option>
+                        <option value="6">Borcsomag 6</option>
+                    </select><br><br>
+
+                    <button type="submit">Feliratkozás</button>
+                </form>
+            </td> <!-- Column 1 -->
+            <td>
+                <img id="kep" src="" alt="Kép" />
+                <p id="valasztas"></p>
+            </td> <!-- Column 2 -->
+        </tr>
+    </table>
 }
 else
 {
-    <h2>Feliratkozás kezelése</h2><br>
-    <h6>Jelenlegi csomagod:</h6>
-    if (Model.FeliratkozasID == 1)
-    {<label>Borcsomag 1</label>}
-    if (Model.FeliratkozasID == 2)
-    {<label>Borcsomag 2</label>}
-    if (Model.FeliratkozasID == 3)
-    {<label>Borcsomag 3</label>}<br><br>
-    <form>
-    </form>
-    <form action="@Url.Action("Valt", "Rekord")" method="post">
-        <label for="csomag_tipus">Csomagváltás:</label><br>
-        <select id="csomag_tipus" name="csomag_tipus" required>
-            @if (Model.FeliratkozasID != 1)
-            {
-                <option value="1">Borcsomag 1</option>
-            }
-            @if (Model.FeliratkozasID != 2)
-            {
-                <option value="2">Borcsomag 2</option>
-            }
-            @if (Model.FeliratkozasID != 3)
-            {
-                <option value="3">Borcsomag 3</option>
-            }
-        </select><br><br>
-        <button type="submit">Válts!</button>
-    </form><br>
-    <form action="@Url.Action("Leir", "Rekord")" method="post">
-        <button type="submit">Leiratkozás</button>
-    </form>
+    <h2>Feliratkozás kezelése</h2>
+    <br>
+    <table>
+        <tr>
+            <!-- Row -->
+            <td>
+                <h6>Jelenlegi csomagod:</h6>
+                @if (Model.FeliratkozasID == 1)
+                {<label>Vörösbor különlegességek</label>}
+                @if (Model.FeliratkozasID == 2)
+                {<label>Borcsomag 2</label>}
+                @if (Model.FeliratkozasID == 3)
+                {<label>Borcsomag 3</label>}
+                @if (Model.FeliratkozasID == 4)
+                {<label>Borcsomag 4</label>}
+                @if (Model.FeliratkozasID == 5)
+                {<label>Borcsomag 5</label>}
+                @if (Model.FeliratkozasID == 6)
+                {<label>Borcsomag 6</label>}
+                <br>
+                <br>
+                <form>
+                </form>
+                <form action="@Url.Action("Valt", "Rekord")" method="post">
+                    <label for="csomag_tipus">Csomagváltás:</label><br>
+                    <select id="csomag_tipus" name="csomag_tipus" onchange="changeSelection()" required>
+                        @if (Model.FeliratkozasID != 1)
+                        {
+                            <option value="1">Vörösbor különlegességek</option>
+                        }
+                        @if (Model.FeliratkozasID != 2)
+                        {
+                            <option value="2">Borcsomag 2</option>
+                        }
+                        @if (Model.FeliratkozasID != 3)
+                        {
+                            <option value="3">Borcsomag 3</option>
+                        }
+                        @if (Model.FeliratkozasID != 4)
+                        {
+                            <option value="4">Borcsomag 4</option>
+                        }
+                        @if (Model.FeliratkozasID != 5)
+                        {
+                            <option value="5">Borcsomag 5</option>
+                        }
+                        @if (Model.FeliratkozasID != 6)
+                        {
+                            <option value="6">Borcsomag 6</option>
+                        }
+
+                    </select><br><br>
+                    <button type="submit">Válts!</button>
+                </form>
+                <br>
+                <form action="@Url.Action("Leir", "Rekord")" method="post">
+                    <button type="submit">Leiratkozás</button>
+                </form>
+            </td> <!-- Column 1 -->
+            <td>
+                <img id="kep" src="" alt="Kép" />
+                <p id="valasztas"></p>
+
+            </td> <!-- Column 2 -->
+        </tr>
+    </table>
+    
 }
 
 
+
+<script>
+    window.onload = function () {
+        changeSelection();
+    };
+    // A select elem változásakor hívódó függvény
+    function changeSelection() {
+        // Az aktuális select érték lekérése
+        var selectValue = document.getElementById("csomag_tipus").value;
+
+        // A szöveg beállítása az aktuális select érték alapján
+        var text = "";
+        if (selectValue === "1") {
+            text = "Borcsomag 1 kiválasztva";
+        } else if (selectValue === "2") {
+            text = "Borcsomag 2 kiválasztva";
+        } else if (selectValue === "3") {
+            text = "Borcsomag 3 kiválasztva";
+        } else if (selectValue === "4") {
+            text = "Borcsomag 4 kiválasztva";
+        } else if (selectValue === "5") {
+            text = "Borcsomag 5 kiválasztva";
+        } else if (selectValue === "6") {
+            text = "Borcsomag 6 kiválasztva";
+        }
+        document.getElementById("valasztas").innerText = text;
+
+        // A kép forrásának beállítása az aktuális select érték alapján
+        var imagePath = "";
+        if (selectValue === "1") {
+            imagePath = "/Portals/0/Images/borcsomag1.png";
+        } else if (selectValue === "2") {
+            imagePath = "/Portals/0/Images/borcsomag1.png";
+        } else if (selectValue === "3") {
+            imagePath = "/Portals/0/Images/borcsomag1.png";
+        } else if (selectValue === "4") {
+            imagePath = "/Portals/0/Images/borcsomag1.png";
+        } else if (selectValue === "5") {
+            imagePath = "/Portals/0/Images/borcsomag1.png";
+        } else if (selectValue === "6") {
+            imagePath = "/Portals/0/Images/borcsomag1.png";
+        }
+        document.getElementById("kep").src = imagePath;
+    }
+</script>
